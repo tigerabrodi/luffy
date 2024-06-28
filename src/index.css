@@ -7,6 +7,9 @@ body {
   height: 100%;
   width: 100%;
   font-family: 'Overpass Variable', sans-serif;
+  background-color: white;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
@@ -15,4 +18,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+input {
+  line-height: normal;
 }
