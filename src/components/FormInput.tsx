@@ -6,6 +6,7 @@ export const FormInput = () => {
         value="Some placeholder"
         placeholder="Wash dishes"
         className="flex-grow p-3 border border-gray-800 rounded-md text-gray-800 placeholder:opacity-50 text-lg font-medium bg-white focus:outline-none focus:shadow-md"
+        // Otherwise doesn't look nice since we user overpass font family
         style={{
           lineHeight: 'normal',
         }}
