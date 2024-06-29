@@ -1,35 +1,17 @@
+import type { Action } from '../reducers/todo'
 import type { Todo } from '../schemas/todos'
 import type { ReactNode, Dispatch } from 'react'
 
 import { createContext, useReducer } from 'react'
 
+import { todoReducer } from '../reducers/todo'
+
 export type State = {
   todos: Array<Todo>
 }
 
-export type Action = { type: 'ADD_TODO'; payload: string }
-
 const initialState: State = {
   todos: [{ id: '1', title: 'First todo', isCompleted: false }],
-}
-
-const reducer = (state: State, action: Action): State => {
-  switch (action.type) {
-    case 'ADD_TODO':
-      return {
-        ...state,
-        todos: [
-          ...state.todos,
-          {
-            id: Date.now().toString(),
-            title: action.payload,
-            isCompleted: false,
-          },
-        ],
-      }
-    default:
-      return state
-  }
 }
 
 export const TodoStateContext = createContext<State | undefined>(undefined)
@@ -42,7 +24,7 @@ type StateProviderProps = {
 }
 
 const TodoProvider = ({ children }: StateProviderProps) => {
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [state, dispatch] = useReducer(todoReducer, initialState)
 
   return (
     <TodoStateContext.Provider value={state}>

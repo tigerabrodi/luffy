@@ -10,12 +10,12 @@ export const Checkbox = ({
 }) => {
   return (
     <RadixCheckbox.Root
-      className="size-[22px] bg-transparent border-2 border-gray-800 rounded-md [&[data-state=open]]:bg-gray-800"
+      className="size-[22px] bg-transparent border-2 border-gray-800 rounded-md [&[data-state=checked]]:bg-gray-800"
       onCheckedChange={onCheckedChange}
       checked={checked}
     >
       <RadixCheckbox.Indicator className="text-blue-100">
-        <Check size={16} />
+        <Check size={16} className="mx-auto" />
       </RadixCheckbox.Indicator>
     </RadixCheckbox.Root>
   )

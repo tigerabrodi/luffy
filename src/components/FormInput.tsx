@@ -13,7 +13,7 @@ export const FormInput = () => {
     event.preventDefault()
     if (!todoValue) return
 
-    dispatch({ type: 'ADD_TODO', payload: todoValue })
+    dispatch({ type: 'ADD_TODO', payload: { title: todoValue } })
     setTodoValue('')
     inputRef.current?.focus()
   }
