@@ -20,7 +20,7 @@ export const Menubar = ({ onEdit, onDelete }: MenubarProps) => {
             side="bottom"
           >
             <RadixMenubar.Item
-              className="flex items-center py-4 gap-2 text-gray-800 cursor-pointer hover:bg-gray-100 pl-[18px]"
+              className="flex items-center py-4 gap-2 text-gray-800 cursor-pointer hover:bg-gray-100 pl-[18px] focus:outline-none"
               onClick={onEdit}
             >
               <Pen size={16} />
@@ -28,7 +28,7 @@ export const Menubar = ({ onEdit, onDelete }: MenubarProps) => {
             </RadixMenubar.Item>
 
             <RadixMenubar.Item
-              className="flex items-center py-4 gap-2 text-gray-800 cursor-pointer hover:bg-gray-100 pl-[18px]"
+              className="flex items-center py-4 gap-2 text-gray-800 cursor-pointer hover:bg-gray-100 pl-[18px] focus:outline-none"
               onClick={onDelete}
             >
               <Trash size={16} />
