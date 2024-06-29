@@ -10,7 +10,7 @@ export type State = {
 export type Action = { type: 'ADD_TODO'; payload: string }
 
 const initialState: State = {
-  todos: [],
+  todos: [{ id: '1', title: 'First todo', isCompleted: false }],
 }
 
 const reducer = (state: State, action: Action): State => {
