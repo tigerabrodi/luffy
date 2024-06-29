@@ -1,4 +1,12 @@
+import { useTodoStateContext } from '../hooks/useStateContext'
+
 export const Header = () => {
+  const state = useTodoStateContext()
+
+  const completedTodos = state.todos.filter((todo) => todo.isCompleted)
+  const completedTodosCount = completedTodos.length
+  const todosCount = state.todos.length
+
   return (
     <div className="flex items-center p-2 gap-16">
       <div className="flex flex-col items-center">
@@ -9,7 +17,9 @@ export const Header = () => {
         </p>
       </div>
       <div className="bg-gray-800 flex items-center justify-center size-32 rounded-full">
-        <span className="text-blue-100 font-medium text-2xl">1/3</span>
+        <span className="text-blue-100 font-medium text-2xl">
+          {completedTodosCount}/{todosCount}
+        </span>
       </div>
     </div>
   )
