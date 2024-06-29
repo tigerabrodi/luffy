@@ -1,11 +1,32 @@
+import { useRef, useState } from 'react'
+
+import { useTodoDispatchContext } from '../hooks/useDispatchContext'
+
 export const FormInput = () => {
+  const [todoValue, setTodoValue] = useState('')
+
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  const dispatch = useTodoDispatchContext()
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (!todoValue) return
+
+    dispatch({ type: 'ADD_TODO', payload: todoValue })
+    setTodoValue('')
+    inputRef.current?.focus()
+  }
+
   return (
-    <form className="flex items-center gap-2 w-full">
+    <form className="flex items-center gap-2 w-full" onSubmit={handleSubmit}>
       <input
         type="text"
-        value="Some placeholder"
+        ref={inputRef}
+        value={todoValue}
+        onChange={(event) => setTodoValue(event.target.value)}
         placeholder="Wash dishes"
-        className="flex-grow p-3 border border-gray-800 rounded-md text-gray-800 placeholder:opacity-50 text-lg font-medium bg-white focus:outline-none focus:shadow-md"
+        className="flex-grow p-3 border border-gray-800 rounded-md text-gray-800 placeholder:opacity-80 text-lg font-medium bg-white focus:outline-none focus:shadow-md"
         // Otherwise doesn't look nice since we user overpass font family
         style={{
           lineHeight: 'normal',
@@ -13,7 +34,8 @@ export const FormInput = () => {
       />
       <button
         type="submit"
-        className="bg-gray-800 px-4 rounded-lg text-blue-100 shadow-md h-full text-lg"
+        className="bg-gray-800 px-4 rounded-lg text-blue-100 shadow-md h-full text-lg disabled:opacity-50"
+        disabled={!todoValue}
       >
         Add item
       </button>
