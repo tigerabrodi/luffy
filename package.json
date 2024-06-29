@@ -10,10 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@fontsource-variable/overpass": "^5.0.19",
+    "@fontsource-variable/inter": "^5.0.18",
+    "@radix-ui/react-checkbox": "^1.1.1",
+    "@radix-ui/react-menubar": "^1.1.1",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
     "lucide-react": "^0.397.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "tailwind-merge": "^2.3.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
