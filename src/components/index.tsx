@@ -1,2 +1,2 @@
-export * from './Header'
-export * from './FormInput'
+export { Header } from './Header'
+export { FormInput } from './FormInput'
