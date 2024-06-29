@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { Checkbox } from './Checkbox'
 import { Menubar } from './Menubar'
 import { useTodoDispatchContext } from '../hooks/useDispatchContext'
+import { EDIT_TODO_DELAY } from '../lib/constants'
 
 type ItemProps = {
   item: Todo
@@ -40,7 +41,7 @@ export const Item = ({ item }: ItemProps) => {
           type: 'EDIT_TODO',
           payload: { id: item.id, title: newTitle },
         })
-      }, 300)
+      }, EDIT_TODO_DELAY)
     }
 
     return () => {
