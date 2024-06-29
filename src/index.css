@@ -6,7 +6,7 @@ html,
 body {
   height: 100%;
   width: 100%;
-  font-family: 'Overpass Variable', sans-serif;
+  font-family: 'Inter Variable', sans-serif;
   background-color: white;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -18,8 +18,4 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-input {
-  line-height: normal;
 }
