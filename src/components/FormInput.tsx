@@ -26,7 +26,7 @@ export const FormInput = () => {
         value={todoValue}
         onChange={(event) => setTodoValue(event.target.value)}
         placeholder="Wash dishes"
-        className="flex-grow p-3 border border-gray-800 rounded-md text-gray-800 placeholder:opacity-80 text-lg font-medium bg-white focus:outline-none focus:shadow-md"
+        className="flex-grow px-3 py-[10px] border border-gray-800 rounded-md text-gray-800 placeholder:opacity-80 text-lg font-medium bg-white focus:outline-none focus:shadow-md"
       />
       <button
         type="submit"
