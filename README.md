@@ -78,3 +78,38 @@ export { TodoProvider }
 ```
 
 </details>
+
+# View Transitions API
+
+The View Transitions API is a new API that allows you to animate the UI between two different states.
+
+It's supported in Chrome, under feature flag in Safari and not yet in Firefox.
+
+<details>
+  <summary>🍿 View Transitions API Explained</summary>
+
+---
+
+## What is it?
+
+A view transition in its essence is a way to animate the UI between two different states.
+
+## Anatomy of a View Transition
+
+During a view transition, the browser constructs a pseudo-element tree that represents the old and new views.
+
+```
+::view-transition
+└─ ::view-transition-group(root)
+   └─ ::view-transition-image-pair(root)
+      ├─ ::view-transition-old(root)
+      └─ ::view-transition-new(root)
+```
+
+- `::view-transition` is the main element that represents the view transition.
+- `::view-transition-group(root)` represents a single view transition group. In a to-do list app, ::view-transition-group(root) would represent the transition for the entire to-do list container.
+- `::view-transition-image-pair(root)` This is a container for the view transition's "old" and "new" view states, before and after the transition. In a to-do list app, ::view-transition-image-pair(root) would contain the old and new states of the to-do list container during the transition.
+- `::view-transition-old(root)` is the old view transition element. In a to-do list app, ::view-transition-old(root) would represent the snapshot of the to-do list before an item is added, removed, or updated.
+- `::view-transition-new(root)` is the new view transition element. In a to-do list app, ::view-transition-new(root) would represent the snapshot of the to-do list after an item is added, removed, or updated.
+
+</details>
