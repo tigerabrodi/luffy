@@ -1,11 +1,15 @@
 import type { Todo } from '../schemas/todos'
 
 import { useEffect, useState } from 'react'
+import { flushSync } from 'react-dom'
 
 import { Checkbox } from './Checkbox'
 import { Menubar } from './Menubar'
 import { useTodoDispatchContext } from '../hooks/useDispatchContext'
 import { EDIT_TODO_DELAY } from '../lib/constants'
+import { cn } from '../lib/utils'
+
+import './Item.css'
 
 type ItemProps = {
   item: Todo
@@ -29,7 +33,15 @@ export const Item = ({ item }: ItemProps) => {
   }
 
   function onDelete() {
-    dispatch({ type: 'DELETE_TODO', payload: { id: item.id } })
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        flushSync(() => {
+          dispatch({ type: 'DELETE_TODO', payload: { id: item.id } })
+        })
+      })
+    } else {
+      dispatch({ type: 'DELETE_TODO', payload: { id: item.id } })
+    }
   }
 
   useEffect(() => {
@@ -52,7 +64,12 @@ export const Item = ({ item }: ItemProps) => {
   }, [dispatch, isEditing, item.id, item.title, newTitle])
 
   return (
-    <li className="flex items-center gap-3 px-4 py-3 border border-gray-800 rounded-md">
+    <li
+      className="flex items-center gap-3 px-4 py-3 border border-gray-800 rounded-md"
+      style={{
+        viewTransitionName: `item-${item.id}`,
+      }}
+    >
       <Checkbox checked={item.isCompleted} onCheckedChange={onCheckedChange} />
 
       {isEditing ? (
@@ -67,7 +84,11 @@ export const Item = ({ item }: ItemProps) => {
           className="text-base bg-transparent font-medium text-gray-800 placeholder:opacity-80 focus:outline-none flex-grow"
         />
       ) : (
-        <p className="text-base font-medium text-gray-800 flex-grow">
+        <p
+          className={cn('text-base font-medium text-gray-800 flex-grow', {
+            'line-through': item.isCompleted,
+          })}
+        >
           {item.title}
         </p>
       )}

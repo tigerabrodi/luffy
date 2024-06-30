@@ -1,0 +1,31 @@
+li {
+  view-transition-class: item;
+}
+
+@keyframes slide-out {
+  to {
+    translate: 100% 0;
+    opacity: 0;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    translate: 100% 0;
+    opacity: 0;
+  }
+}
+
+::view-transition-group(.item) {
+  animation-duration: 400ms;
+}
+
+/* Items gets added */
+::view-transition-new(.item):only-child {
+  animation-name: slide-in;
+}
+
+/* Item gets removed */
+::view-transition-old(.item):only-child {
+  animation-name: slide-out;
+}

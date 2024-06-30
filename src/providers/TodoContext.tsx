@@ -11,7 +11,7 @@ export type State = {
 }
 
 const initialState: State = {
-  todos: [{ id: '1', title: 'First todo', isCompleted: false }],
+  todos: [],
 }
 
 export const TodoStateContext = createContext<State | undefined>(undefined)

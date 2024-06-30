@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { flushSync } from 'react-dom'
 
 import { useTodoDispatchContext } from '../hooks/useDispatchContext'
 
@@ -13,7 +14,18 @@ export const FormInput = () => {
     event.preventDefault()
     if (!todoValue) return
 
-    dispatch({ type: 'ADD_TODO', payload: { title: todoValue } })
+    // not supported by all browsers
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        flushSync(() => {
+          console.log('dispatching inside view transition')
+          dispatch({ type: 'ADD_TODO', payload: { title: todoValue } })
+        })
+      })
+    } else {
+      dispatch({ type: 'ADD_TODO', payload: { title: todoValue } })
+    }
+
     setTodoValue('')
     inputRef.current?.focus()
   }
@@ -26,7 +38,7 @@ export const FormInput = () => {
         value={todoValue}
         onChange={(event) => setTodoValue(event.target.value)}
         placeholder="Wash dishes"
-        className="flex-grow px-3 py-[10px] border border-gray-800 rounded-md text-gray-800 placeholder:opacity-80 text-lg font-medium bg-white focus:outline-none focus:shadow-md"
+        className="flex-grow px-3 py-2 border border-gray-800 rounded-md text-gray-800 placeholder:opacity-80 text-lg font-medium bg-white focus:outline-none focus:shadow-md"
       />
       <button
         type="submit"
