@@ -7,7 +7,7 @@ I decided to build another Todo App and try out two things:
 
 # Demo
 
-{incoming}
+https://github.com/tigerabrodi/luffy/assets/49603590/4038c33e-88d4-4923-93ae-3a80afe5322d
 
 # Get it up and running
 
