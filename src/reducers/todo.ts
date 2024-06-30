@@ -70,5 +70,12 @@ export const todoReducer = (state: State, action: Action): State => {
     }
   }
 
+  if (action.type === 'SET_TODOS') {
+    return {
+      ...state,
+      todos: action.payload.todos,
+    }
+  }
+
   return state
 }
