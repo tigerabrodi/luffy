@@ -1,30 +1,80 @@
-# React + TypeScript + Vite
+# Todo App built with React
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+I decided to build another Todo App and try out two things:
 
-Currently, two official plugins are available:
+- Context and Reducer pattern: Two contexts, one for the state and one for dispatch.
+- View Transitions API: To animate the items when they are added or removed.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Demo
 
-## Expanding the ESLint configuration
+{incoming}
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+# Get it up and running
 
-- Configure the top-level `parserOptions` property like this:
+1. Clone the repository
+2. Run `pnpm install`
+3. Run `pnpm dev`
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
+# Context and Reducer pattern
+
+## Problem with a single context
+
+Whenever you update state in a context, all components that consume the context are re-rendered. Even if the state they consume isn't the one that changed.
+
+This isn't always a problem, but it's not efficient. If a component is simply triggering an update to happen, it doesn't need to re-render. Therefore, it shouldn't.
+
+To be clear: A component that consume a `setState` function shouldn't re-render when the state changes. It's only causing the update to happen but doesn't need to know about the state.
+
+## Solution: Two contexts
+
+The solution to this is to use two contexts and a reducer. One for the state and one for the dispatch.
+
+Components that dispatch actions will not re-render when state changes.
+
+Mind you, this isn't always needed and of course an overkill for a todo app, but I wanted to try it out and see how it re-renders behave.
+
+<details>
+  <summary>🍿 Todo Context Code</summary>
+
+```tsx
+import type { Action } from '../reducers/todo'
+import type { Todo } from '../schemas/todos'
+import type { ReactNode, Dispatch } from 'react'
+
+import { createContext, useReducer } from 'react'
+
+import { todoReducer } from '../reducers/todo'
+
+export type State = {
+  todos: Array<Todo>
 }
+
+const initialState: State = {
+  todos: [],
+}
+
+export const TodoStateContext = createContext<State | undefined>(undefined)
+export const TodoDispatchContext = createContext<Dispatch<Action> | undefined>(
+  undefined
+)
+
+type StateProviderProps = {
+  children: ReactNode
+}
+
+const TodoProvider = ({ children }: StateProviderProps) => {
+  const [state, dispatch] = useReducer(todoReducer, initialState)
+
+  return (
+    <TodoStateContext.Provider value={state}>
+      <TodoDispatchContext.Provider value={dispatch}>
+        {children}
+      </TodoDispatchContext.Provider>
+    </TodoStateContext.Provider>
+  )
+}
+
+export { TodoProvider }
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+</details>
